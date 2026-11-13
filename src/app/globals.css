@@ -104,3 +104,30 @@
 .animate-rise {
   animation: rise 0.25s ease-out both;
 }
+
+/* ===== Animasi halaman depan ===== */
+@keyframes ak-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
+@keyframes ak-sway { 0%,100% { transform: rotate(0deg) } 50% { transform: rotate(1.6deg) } }
+@keyframes ak-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+@keyframes ak-grow { from { width: 0 } }
+@keyframes ak-rise { from { transform: scaleY(0) } }
+@keyframes ak-in { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+@keyframes ak-shine { from { background-position: 200% 0 } to { background-position: -200% 0 } }
+.ak-bob { animation: ak-bob 2.4s ease-in-out infinite; }
+.ak-sway { animation: ak-sway 4s ease-in-out infinite; }
+.ak-float { animation: ak-float 5s ease-in-out infinite; }
+.ak-grow { animation: ak-grow 1.4s cubic-bezier(.22,.9,.24,1) both; }
+.ak-rise { transform-origin: bottom; animation: ak-rise .8s cubic-bezier(.22,.9,.24,1) both; }
+.ak-in { animation: ak-in .8s cubic-bezier(.22,.9,.24,1) both; }
+.ak-press { transition: transform .15s ease, box-shadow .2s ease, background-color .2s; }
+.ak-press:hover { transform: translateY(-1px); }
+.ak-press:active { transform: scale(.97); }
+.ak-reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.22,.9,.24,1), transform .8s cubic-bezier(.22,.9,.24,1); }
+.ak-reveal.is-shown { opacity: 1; transform: none; }
+.ak-handwrite { font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  .ak-bob, .ak-sway, .ak-float, .ak-grow, .ak-rise, .ak-in { animation: none !important; }
+  .ak-reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}

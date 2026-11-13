@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { IconCheck, IconChat, IconClock, IconUsers, IconX } from "@/components/Icons";
 import type { Availability, BookingDTO } from "@/lib/booking";
+import { QR } from "@/components/landing/QR";
 import { api } from "@/lib/client";
 import { formatDateLong, formatDateShort, toMinutes } from "@/lib/time";
 
@@ -352,24 +353,48 @@ function SuccessDialog({ booking, role, onClose }: { booking: BookingDTO; role: 
   return (
     <Modal onClose={onClose}>
       <div className="flex flex-col items-center text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-lake-100 text-lake-600">
+        <div className="ak-in flex h-14 w-14 items-center justify-center rounded-full bg-lake-100 text-lake-600">
           <IconCheck className="h-8 w-8" />
         </div>
-        <h2 className="mt-4 text-xl font-extrabold text-slate-900">Booking berhasil!</h2>
-        <p className="mt-1 text-sm text-slate-500">Tunjukkan kode ini bila diminta petugas.</p>
-        <div className="mt-4 rounded-2xl border-2 border-dashed border-brand-200 bg-brand-50 px-6 py-3 font-mono text-2xl font-bold tracking-widest text-brand-700">
-          {booking.code}
+        <h2 className="mt-3 text-xl font-extrabold text-slate-900">Booking terkonfirmasi!</h2>
+        <p className="mt-1 text-sm text-slate-500">Simpan e-tiket ini. Tunjukkan bila diminta petugas.</p>
+      </div>
+      <div className="ak-in mt-5 overflow-hidden rounded-2xl bg-slate-900 text-white shadow-xl [animation-delay:120ms]">
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 text-xs">
+          <span className="font-extrabold">
+            Antre<span className="text-brand-300">Kita</span>
+          </span>
+          <span className="font-bold tracking-widest text-amber-300">E-TIKET</span>
         </div>
-        <div className="mt-4 text-sm text-slate-700">
-          <b>{booking.roomName}</b> · {formatDateShort(booking.date)} · {booking.start}–{booking.end}
+        <div className="flex items-center gap-4 px-5 py-4">
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] uppercase tracking-widest text-slate-400">Kode booking</div>
+            <div className="text-3xl font-extrabold tracking-wider">{booking.code}</div>
+            <div className="mt-2 space-y-0.5 text-xs text-slate-300">
+              <div className="font-semibold text-white">{booking.roomName}</div>
+              <div>{formatDateLong(booking.date)}</div>
+              <div>
+                {booking.start}–{booking.end} WIB · {booking.participants} orang
+              </div>
+            </div>
+          </div>
+          <div className="shrink-0 rounded-xl bg-white p-2">
+            <QR value={booking.code} size={84} />
+          </div>
         </div>
-        <p className="mt-3 text-xs text-slate-500">
-          Jangan lupa check-in di ruangan maksimal 15 menit setelah jam mulai, atau booking otomatis hangus.
-        </p>
-        <div className="mt-5 flex w-full gap-2">
-          <button className="btn-secondary flex-1" onClick={onClose}>Tutup</button>
-          {role === "STUDENT" && <Link href="/saya" className="btn-primary flex-1">Booking saya</Link>}
+        <div className="relative border-t border-dashed border-white/20 px-5 py-3 text-[11px] text-slate-400">
+          <span className="absolute -left-2 -top-2 h-4 w-4 rounded-full bg-white" />
+          <span className="absolute -right-2 -top-2 h-4 w-4 rounded-full bg-white" />
+          Check-in di pintu ruang maks. 15 menit setelah jam mulai, atau booking otomatis hangus.
         </div>
+      </div>
+      <div className="mt-5 flex w-full gap-2">
+        <button className="btn-secondary ak-press flex-1" onClick={() => window.print()}>Cetak / simpan</button>
+        {role === "STUDENT" ? (
+          <Link href="/saya" className="btn-primary ak-press flex-1">Booking saya</Link>
+        ) : (
+          <button className="btn-primary ak-press flex-1" onClick={onClose}>Selesai</button>
+        )}
       </div>
     </Modal>
   );
