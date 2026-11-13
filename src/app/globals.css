@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+/* Palet AntreKita: biru "Danau Toba" + hijau tosca untuk slot kosong */
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --color-brand-50: #eef5ff;
+  --color-brand-100: #d9e8ff;
+  --color-brand-200: #bcd6ff;
+  --color-brand-300: #8ebcff;
+  --color-brand-400: #5996fd;
+  --color-brand-500: #3371f8;
+  --color-brand-600: #1d52ed;
+  --color-brand-700: #153ed9;
+  --color-brand-800: #1834b0;
+  --color-brand-900: #19318b;
+  --color-brand-950: #0f1d4f;
+
+  --color-lake-50: #ecfdf8;
+  --color-lake-100: #d1faee;
+  --color-lake-200: #a7f3dd;
+  --color-lake-300: #6ee7c6;
+  --color-lake-400: #34d3aa;
+  --color-lake-500: #10b992;
+  --color-lake-600: #059677;
+  --color-lake-700: #047862;
+
+  --shadow-soft: 0 1px 2px rgb(15 29 79 / 0.04), 0 8px 24px -8px rgb(15 29 79 / 0.12);
+}
+
+/* "btn" dibuat sebagai utility supaya bisa di-@apply oleh varian tombol */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-4;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+  }
+  ::selection {
+    @apply bg-brand-200;
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+  .card {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-soft;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 focus-visible:ring-brand-200;
+  }
+  .btn-secondary {
+    @apply btn border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-slate-200;
+  }
+  .btn-ghost {
+    @apply btn text-slate-600 hover:bg-slate-100 focus-visible:ring-slate-200;
+  }
+  .btn-danger {
+    @apply btn bg-rose-600 text-white hover:bg-rose-700 focus-visible:ring-rose-200;
+  }
+  .btn-success {
+    @apply btn bg-lake-600 text-white hover:bg-lake-700 focus-visible:ring-lake-200;
+  }
+  .input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-400
+      focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-100;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .page-title {
+    @apply text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl;
+  }
+}
+
+/* Sembunyikan scrollbar horizontal di strip tanggal */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-rise {
+  animation: rise 0.25s ease-out both;
+}
